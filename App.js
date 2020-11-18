@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState, useEffect} from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
-import url from './Services/api'
+import Logo from './images/pokemon-png-logo.png'
 
 export default function App() {
   const [pokemons, setPokemons] = useState([])
@@ -21,6 +21,10 @@ export default function App() {
   }, [])
   return (
     <SafeAreaView  style={{marginTop: 50}}>
+      <Image
+      source={Logo}
+      style={styles.logo}
+      />
       <FlatList 
         data={pokemons}
         keyExtractor={(pokemon) => pokemon.name}
@@ -42,7 +46,9 @@ function PokemonShow(item){
 
   console.log(pokemonNumber)
 
-  const imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+pokemonNumber+'.png'
+  // const imageUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'+pokemonNumber+'.png'
+
+  const imageUrl = 'https://pokeres.bastionbot.org/images/pokemon/'+pokemonNumber+'.png'
 
   // const img = imageUrl.replace("https://pokeapi.co/api/v2/pokemon-form", "").replace("/", "")
 
@@ -50,14 +56,40 @@ function PokemonShow(item){
 
   return (
     <View style={styles.container}>
-      <Image style={{width:100, height:100}} source={{uri: imageUrl}}/>
-      <Text style={{fontSize: 20, alignItems: 'center', justifyContent: 'center'}}>{name}</Text>
+      <Image style={styles.image} source={{uri: imageUrl}}/>
+      <Text style={styles.pokeName}>{name}</Text>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex
+    flexDirection: 'row',
+    height: 100,
+    backgroundColor:  '#77dd77',
+    margin: 30,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
+
+  },
+  pokeName: {
+    fontSize: 20,
+    alignItems: 'center',
+    position: 'relative',
+    fontWeight: 'bold'
+  },
+  logo:{
+    height:100,
+    width:280,
+    marginLeft: 60,
+    marginBottom: 50
+  },
+  image:{
+    height:130,
+    width:130,
+    marginBottom: 70,
+    marginRight:50,
+    position: 'relative'
   }
 })
