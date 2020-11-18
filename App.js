@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React,{useState, useEffect} from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import Logo from './images/pokemon-png-logo.png'
+import * as Font from 'expo-font';
+
 
 export default function App() {
   const [pokemons, setPokemons] = useState([])
@@ -19,19 +21,21 @@ export default function App() {
         setPokemons(data.results)
       })
   }, [])
+
+ 
   return (
-    <SafeAreaView  style={{marginTop: 50}}>
+    <SafeAreaView  style={styles.safeview}>
+       <StatusBar backgroundColor="#77dd77" barStyke="dark-content" />
       <Image
       source={Logo}
       style={styles.logo}
       />
       <FlatList 
+        style={styles.list}
+        showsVerticalScrollIndicator={false}
         data={pokemons}
         keyExtractor={(pokemon) => pokemon.name}
-        contentContainerStyle={{flexGrow: 1}}
         renderItem={PokemonShow}
-        style={{padding:10}}
-
       />
     </SafeAreaView>
   );
@@ -56,22 +60,30 @@ function PokemonShow(item){
 
   return (
     <View style={styles.container}>
+      <View style={styles.container2}>
       <Image style={styles.image} source={{uri: imageUrl}}/>
       <Text style={styles.pokeName}>{name}</Text>
+      </View>
     </View>
   )
 }
 
+
+
+
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#fff',
+    
+  },
+  container2: {
     flexDirection: 'row',
     height: 100,
     backgroundColor:  '#77dd77',
-    margin: 30,
+    margin: 50,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent: 'center'
-
+    justifyContent: 'center',
   },
   pokeName: {
     fontSize: 20,
@@ -80,16 +92,25 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   logo:{
-    height:100,
+    marginTop: 50,
+    height:90,
     width:280,
     marginLeft: 60,
-    marginBottom: 50
+    marginBottom: 20
   },
   image:{
     height:130,
     width:130,
     marginBottom: 70,
     marginRight:50,
-    position: 'relative'
-  }
+    position: 'relative',
+
+  },
+  list:{
+    
+  },
+  safeview: {
+    backgroundColor:'#77dd77', 
+    marginBottom: 150
+  },
 })
