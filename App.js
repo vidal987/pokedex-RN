@@ -2,14 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import React,{useState, useEffect} from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import Logo from './images/pokemon-png-logo.png'
-import * as Font from 'expo-font';
+
 
 
 export default function App() {
   const [pokemons, setPokemons] = useState([])
-
   useEffect(() => {
-    fetch('https://pokeapi.co/api/v2/pokemon', {
+    fetch('https://pokeapi.co/api/v2/pokemon?limit=151', {
       method: 'GET',
       headers: {
         'Accept' : 'application/json'
@@ -24,21 +23,23 @@ export default function App() {
 
  
   return (
-    <SafeAreaView  style={styles.safeview}>
-       <StatusBar backgroundColor="#77dd77" barStyke="dark-content" />
-      <Image
-      source={Logo}
-      style={styles.logo}
-      />
-      <FlatList 
-        style={styles.list}
-        showsVerticalScrollIndicator={false}
-        data={pokemons}
-        keyExtractor={(pokemon) => pokemon.name}
-        renderItem={PokemonShow}
-      />
-    </SafeAreaView>
-  );
+      <View style={{backgroundColor: '#77dd77',}}>
+        <StatusBar backgroundColor="#77dd77" barStyle='light-content' />
+       <Image
+       source={Logo}
+       style={styles.logo}
+       />
+         <FlatList 
+           style={styles.list}
+           showsVerticalScrollIndicator={false}
+           data={pokemons}
+           keyExtractor={(pokemon) => pokemon.name}
+           renderItem={PokemonShow}
+         />
+      </View>
+ 
+   );
+
 }
 
 
@@ -56,15 +57,16 @@ function PokemonShow(item){
 
   // const img = imageUrl.replace("https://pokeapi.co/api/v2/pokemon-form", "").replace("/", "")
 
-  console.log(imageUrl)
+  // console.log(imageUrl)
 
   return (
-    <View style={styles.container}>
-      <View style={styles.container2}>
-      <Image style={styles.image} source={{uri: imageUrl}}/>
-      <Text style={styles.pokeName}>{name}</Text>
+  
+      <View style={styles.container}>
+        <View style={styles.container2}>
+        <Image style={styles.image} source={{uri: imageUrl}}/>
+        <Text style={styles.pokeName}>{name}</Text>
+        </View>
       </View>
-    </View>
   )
 }
 
@@ -72,9 +74,9 @@ function PokemonShow(item){
 
 
 const styles = StyleSheet.create({
+
   container: {
-    backgroundColor: '#fff',
-    
+    backgroundColor: '#fff',  
   },
   container2: {
     flexDirection: 'row',
@@ -86,8 +88,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   pokeName: {
-    fontSize: 20,
+    fontSize: 30,
     alignItems: 'center',
+    marginRight: 30,
+    color:  '#000' ,
     position: 'relative',
     fontWeight: 'bold'
   },
@@ -99,18 +103,21 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   image:{
-    height:130,
-    width:130,
-    marginBottom: 70,
-    marginRight:50,
+    height:120,
+    width:120,
+    marginBottom: 30,
+    marginRight:10,
+    marginLeft: 20,
     position: 'relative',
 
   },
   list:{
-    
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 80
   },
   safeview: {
-    backgroundColor:'#77dd77', 
+    backgroundColor:'#000', 
     marginBottom: 150
   },
 })
